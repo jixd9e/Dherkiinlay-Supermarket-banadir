@@ -28,23 +28,23 @@ const AuthPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100">
+      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100 animate-scale-in">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-20 h-20 mb-4 bg-green-50 rounded-full flex items-center justify-center">
+          <div className="w-20 h-20 mb-4 bg-green-50 rounded-full flex items-center justify-center animate-bounce">
              <LogoIcon className="w-14 h-14" />
           </div>
-          <h1 className="text-3xl font-bold text-green-700 mb-1">Dherkiinlay</h1>
-          <span className="text-xs font-bold text-orange-500 tracking-widest uppercase mb-2">Supermarket</span>
-          <p className="text-gray-500 text-sm">{isLogin ? 'Welcome back! Please login.' : 'Create your account today.'}</p>
+          <h1 className="text-3xl font-bold text-green-700 mb-1 animate-fade-in-up delay-100">Dherkiinlay</h1>
+          <span className="text-xs font-bold text-orange-500 tracking-widest uppercase mb-2 animate-fade-in-up delay-200">Supermarket</span>
+          <p className="text-gray-500 text-sm animate-fade-in-up delay-300">{isLogin ? 'Welcome back! Please login.' : 'Create your account today.'}</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 animate-fade-in-up delay-300 opacity-0" style={{ animationFillMode: 'forwards' }}>
           {!isLogin && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
               <input 
                 type="text" 
-                className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary-500 outline-none"
+                className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary-500 outline-none transition-all focus:shadow-sm"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -55,7 +55,7 @@ const AuthPage: React.FC = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
             <input 
               type="email" 
-              className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary-500 outline-none"
+              className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary-500 outline-none transition-all focus:shadow-sm"
               placeholder="name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -66,22 +66,22 @@ const AuthPage: React.FC = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <input 
               type="password" 
-              className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary-500 outline-none"
+              className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary-500 outline-none transition-all focus:shadow-sm"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
 
-          <button type="submit" className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 rounded-lg transition shadow-lg shadow-primary-100">
+          <button type="submit" className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 rounded-lg transition shadow-lg shadow-primary-100 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 duration-200">
             {isLogin ? 'Sign In' : 'Create Account'}
           </button>
         </form>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 text-center animate-fade-in-up delay-500 opacity-0" style={{ animationFillMode: 'forwards' }}>
           <button 
             onClick={() => setIsLogin(!isLogin)} 
-            className="text-sm text-primary-600 hover:underline"
+            className="text-sm text-primary-600 hover:underline hover:text-primary-800 transition"
           >
             {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Log In"}
           </button>

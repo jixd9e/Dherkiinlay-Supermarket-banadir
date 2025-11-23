@@ -233,7 +233,14 @@ const ImageUploader = ({ currentImage, onImageSelected, label }: { currentImage:
     );
 }
 
-const CategoryManager = ({ categories, onAdd, onUpdate, onDelete }: { categories: Category[], onAdd: any, onUpdate: any, onDelete: any }) => {
+interface CategoryManagerProps {
+    categories: Category[];
+    onAdd: (c: Category) => void;
+    onUpdate: (c: Category) => void;
+    onDelete: (id: string) => void;
+}
+
+const CategoryManager: React.FC<CategoryManagerProps> = ({ categories, onAdd, onUpdate, onDelete }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     
@@ -276,7 +283,7 @@ const CategoryManager = ({ categories, onAdd, onUpdate, onDelete }: { categories
         <div className="space-y-6 animate-in fade-in duration-500">
             <div className="flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-gray-900">Category Management</h1>
-                <button onClick={openAddModal} className="bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-700 shadow-lg shadow-primary-200">
+                <button type="button" onClick={openAddModal} className="bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-700 shadow-lg shadow-primary-200">
                     <Plus size={18} /> Add Category
                 </button>
             </div>
@@ -295,10 +302,11 @@ const CategoryManager = ({ categories, onAdd, onUpdate, onDelete }: { categories
                                     <p className="text-xs text-gray-500 mt-1 line-clamp-2">{cat.description || 'No description provided.'}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => openEditModal(cat)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition">
+                                    <button type="button" onClick={() => openEditModal(cat)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition">
                                         <Edit size={16} />
                                     </button>
                                     <button 
+                                        type="button"
                                         onClick={() => {
                                             if(window.confirm(`Are you sure you want to delete category "${cat.name}"? This action cannot be undone.`)) {
                                                 onDelete(cat.id);
@@ -321,7 +329,7 @@ const CategoryManager = ({ categories, onAdd, onUpdate, onDelete }: { categories
                     <div className="bg-white rounded-xl w-full max-w-md shadow-2xl animate-in zoom-in duration-200">
                         <div className="flex justify-between items-center p-6 border-b">
                             <h3 className="text-lg font-bold">{editingId ? 'Edit Category' : 'Add New Category'}</h3>
-                            <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition">
+                            <button type="button" onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition">
                                 <X size={20} />
                             </button>
                         </div>
@@ -361,7 +369,15 @@ const CategoryManager = ({ categories, onAdd, onUpdate, onDelete }: { categories
     );
 };
 
-const ProductManager = ({ products, categories, onAdd, onUpdate, onDelete }: any) => {
+interface ProductManagerProps {
+    products: Product[];
+    categories: Category[];
+    onAdd: (p: Product) => void;
+    onUpdate: (p: Product) => void;
+    onDelete: (id: string) => void;
+}
+
+const ProductManager: React.FC<ProductManagerProps> = ({ products, categories, onAdd, onUpdate, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   
@@ -405,7 +421,7 @@ const ProductManager = ({ products, categories, onAdd, onUpdate, onDelete }: any
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Product Management</h1>
-        <button onClick={openAddModal} className="bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-700 shadow-lg shadow-primary-200">
+        <button type="button" onClick={openAddModal} className="bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-700 shadow-lg shadow-primary-200">
           <Plus size={18} /> Add Product
         </button>
       </div>
@@ -426,6 +442,7 @@ const ProductManager = ({ products, categories, onAdd, onUpdate, onDelete }: any
                </div>
                <div className="flex gap-2">
                   <button 
+                    type="button"
                     onClick={() => openEditModal(product)}
                     className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition" 
                     title="Edit Product"
@@ -433,6 +450,7 @@ const ProductManager = ({ products, categories, onAdd, onUpdate, onDelete }: any
                     <Edit size={18}/>
                   </button>
                   <button 
+                    type="button"
                     onClick={() => {
                       if(window.confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
                         onDelete(product.id);
@@ -454,7 +472,7 @@ const ProductManager = ({ products, categories, onAdd, onUpdate, onDelete }: any
           <div className="bg-white rounded-xl w-full max-w-md shadow-2xl animate-in zoom-in duration-200 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center p-6 border-b sticky top-0 bg-white z-10">
                 <h3 className="text-lg font-bold">{editingId ? 'Edit Product' : 'Add New Product'}</h3>
-                <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition">
                   <X size={20} />
                 </button>
             </div>

@@ -67,4 +67,9 @@ export interface StoreContextType {
   deleteCategory: (id: string) => void;
   updateOrderStatus: (id: string, status: Order['status']) => void;
   setCategories: (c: Category[]) => void;
+  
+  // Language Support
+  lang: 'en' | 'so';
+  setLang: (lang: 'en' | 'so') => void;
+  t: any; // Translation object
 }

@@ -3,12 +3,18 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Product, Category, CartItem, Order, User, StoreContextType } from './types';
 import { initialProducts, initialCategories, initialOrders } from './services/mockData';
 import Layout from './components/Layout';
+import HomePage from './components/HomePage';
 import ShopPage from './components/ShopPage';
+import AboutPage from './components/AboutPage';
+import PrivacyPage from './components/PrivacyPage';
+import DiscountsPage from './components/DiscountsPage';
+import SearchPage from './components/SearchPage';
 import AdminDashboard from './components/AdminDashboard';
 import AuthPage from './components/AuthPage';
 import ProductDetailsPage from './components/ProductDetailsPage';
 import CheckoutPage from './components/CheckoutPage';
 import { StoreContext } from './StoreContext';
+import { en, so } from './locales';
 
 // Helper for Route Protection
 interface ProtectedRouteProps {
@@ -31,8 +37,10 @@ const App: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [searchQuery, setSearchQuery] = useState('');
-
-  // --- Actions ---
+  
+  // Language State
+  const [lang, setLang] = useState<'en' | 'so'>('en');
+  const t = lang === 'en' ? en : so;
 
   // Force initialization of orders if empty (Fixes hot-reload/persistence issue)
   useEffect(() => {
@@ -41,6 +49,18 @@ const App: React.FC = () => {
     }
   }, []);
 
+  // Persist language
+  useEffect(() => {
+    const savedLang = localStorage.getItem('site_lang') as 'en' | 'so';
+    if (savedLang) setLang(savedLang);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('site_lang', lang);
+  }, [lang]);
+
+
+  // --- Actions ---
   const addToCart = (product: Product) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product.id);
@@ -126,7 +146,10 @@ const App: React.FC = () => {
     updateCategory,
     deleteCategory,
     updateOrderStatus,
-    setCategories
+    setCategories,
+    lang,
+    setLang,
+    t
   };
 
   return (
@@ -144,7 +167,12 @@ const App: React.FC = () => {
 
           {/* Customer Routes */}
           <Route element={<Layout />}>
-            <Route path="/" element={<ShopPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/discounts" element={<DiscountsPage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/product/:id" element={<ProductDetailsPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
